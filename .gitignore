@@ -1,0 +1,11 @@
+__pycache__/
+.pytest_cache/
+
+.vscode/
+pipfile.lock
+
+.env
+.venv
+
+reports/
+expected.csv
