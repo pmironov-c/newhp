@@ -1,9 +1,9 @@
 Practise with autotests
 
 ## prepare venv
-python -m venv .venv 
-source .venv/bin/activate
-pip install -r requirements.txt
+python -m venv .venv   
+source .venv/bin/activate   
+pip install -r requirements.txt   
 
 ## requires selenium grid standalone server 
  https://www.selenium.dev/documentation/grid/getting_started/ 
