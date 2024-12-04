@@ -1,7 +1,7 @@
 from datetime import datetime
 from selenium.webdriver.common.by import By
 from pages.login_page import LoginPageLocators, LoginPage
-from pages.account_page import AccountPage
+from pages.account_page import AccountPageLocators, AccountPage
 from pages.transactions_page import TransactionsPage
 
 
@@ -25,7 +25,7 @@ def test_login_as_HP(chrome_browser):
     login_page.select_user_from_list(user_name)
     login_page.click_login_btn()
 
-    assert login_page.find_element(LoginPageLocators.logout_btn)
+    assert login_page.find_element(LoginPageLocators.LOGOUT_BTN)
 
 
 def test_deposit(chrome_browser, fibonacci_n):
@@ -40,7 +40,13 @@ def test_deposit(chrome_browser, fibonacci_n):
     account_page.set_deposit_amount(amount)
     account_page.click_deposit_submit_btn()
 
-    assert chrome_browser.find_element(By.XPATH, '//*[text()="Deposit Successful"]')
+    assert account_page.find_elements(AccountPageLocators.ACCOUNT_INFO)[1].text == str(
+        amount
+    )
+    assert (
+        account_page.find_element(AccountPageLocators.DEPOSIT_MSG).text
+        == "Deposit Successful"
+    )
 
 
 def test_withdrawl(chrome_browser, fibonacci_n):
@@ -56,7 +62,10 @@ def test_withdrawl(chrome_browser, fibonacci_n):
     account_page.set_withdrawl_amount(amount)
     account_page.click_withdrawl_submit_btn()
 
-    assert chrome_browser.find_element(By.XPATH, '//*[text()="Transaction successful"]')
+    assert (
+        account_page.find_element(AccountPageLocators.WITHDRAWL_MSG).text
+        == "Transaction successful"
+    )
 
 
 def test_balance(chrome_browser, fibonacci_n):
@@ -69,9 +78,7 @@ def test_balance(chrome_browser, fibonacci_n):
     account_page.deposit(amount)
     account_page.withdrawl(amount)
 
-    es = chrome_browser.find_elements(By.CSS_SELECTOR, "div.center > strong")
-
-    assert es[1].text == "0"
+    assert account_page.find_elements(AccountPageLocators.ACCOUNT_INFO)[1].text == "0"
 
 
 def test_transactions(chrome_browser, fibonacci_n):
