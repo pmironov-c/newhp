@@ -14,8 +14,8 @@ class AccountPageLocators:
     WITHDRAWL_SUBMIT_BTN = (By.XPATH, '//button[@type="submit" and text()="Withdraw"]')
 
     TRANSACTIONS_BTN = (By.CSS_SELECTOR, 'button[ng-click="transactions()"]')
-    TRANSACTIONS_TBL = (By.TAG_NAME, 'table"]')
-    
+    TRANSACTIONS_TBL = (By.TAG_NAME, "table")
+
     ACCOUNT_INFO = (By.CSS_SELECTOR, "div.center > strong")
 
 

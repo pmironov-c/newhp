@@ -2,7 +2,7 @@ from datetime import datetime
 from selenium.webdriver.common.by import By
 from pages.login_page import LoginPageLocators, LoginPage
 from pages.account_page import AccountPageLocators, AccountPage
-from pages.transactions_page import TransactionsPage
+from pages.transactions_page import TransactionsPageLocators, TransactionsPage
 
 
 def test_visit_XYZ_Bank(chrome_browser):
@@ -90,8 +90,18 @@ def test_transactions(chrome_browser, fibonacci_n):
     account_page = AccountPage(chrome_browser)
     account_page.deposit(amount)
     account_page.withdrawl(amount)
-    account_page.click_transactions_btn()
 
+    account_page.click_transactions_btn()
     tx_page = TransactionsPage(chrome_browser)
 
-    assert tx_page.count_rows() == 2
+    err = []
+    if tx_page.count_tx_table_rows() != 2:
+        err.append(f"Should be 2 rows in table")
+    if tx_page.get_row_n(1)[1].text != str(amount) != tx_page.get_row_n(1)[1].text:
+        err.append(f"Amount in 1st and 2nd rows should be equal to {amount}")
+    if tx_page.get_row_n(1)[2].text != "Credit":
+        err.append(f"Transaction type in 1st row should be 'Credit'")
+    if tx_page.get_row_n(2)[2].text != "Debit":
+        err.append(f"Transaction type in 2nd row should be 'Debit'")
+
+    assert not err, f"errors occured:\n{"\n".join(err)}"
