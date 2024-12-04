@@ -1,3 +1,4 @@
+import allure
 from datetime import datetime
 from selenium.webdriver.common.by import By
 from pages.login_page import LoginPageLocators, LoginPage
@@ -94,14 +95,26 @@ def test_transactions(chrome_browser, fibonacci_n):
     account_page.click_transactions_btn()
     tx_page = TransactionsPage(chrome_browser)
 
-    err = []
-    if tx_page.count_tx_table_rows() != 2:
-        err.append(f"Should be 2 rows in table")
-    if tx_page.get_row_n(1)[1].text != str(amount) != tx_page.get_row_n(1)[1].text:
-        err.append(f"Amount in 1st and 2nd rows should be equal to {amount}")
-    if tx_page.get_row_n(1)[2].text != "Credit":
-        err.append(f"Transaction type in 1st row should be 'Credit'")
-    if tx_page.get_row_n(2)[2].text != "Debit":
-        err.append(f"Transaction type in 2nd row should be 'Debit'")
+    tx_table = []
+    with open("tests/expected.csv", "w", encoding="utf-8") as out_file:
+        for i in range(1, tx_page.count_tx_table_rows() + 1):
+            d, a, t = [e.text for e in tx_page.get_row_n(i)]
+            new_d = datetime.strptime(d, "%b %d, %Y %H:%M:%S %p").strftime(
+                "%d %B %Y %H:%M:%S"
+            )
+            out_file.write(f"{new_d} {a} {t} \n")
+            tx_table.append([d, a, t])
 
-    assert not err, f"errors occured:\n{"\n".join(err)}"
+    allure.attach.file("tests/expected.csv", "Transactions data")
+
+    e = []
+    if len(tx_table) != 2:
+        e.append(f"Should be 2 rows in table")
+    if tx_table[0][1] != str(amount) != tx_table[1][1]:
+        e.append(f"Amount in 1st and 2nd rows should be equal to {amount}")
+    if tx_table[0][2] != "Credit":
+        e.append(f"Transaction type in 1st row should be 'Credit'")
+    if tx_table[1][2] != "Debit":
+        e.append(f"Transaction type in 2nd row should be 'Debit'")
+
+    assert not e, f"errors occured:\n{"\n".join(e)}"
