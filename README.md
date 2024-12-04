@@ -2,12 +2,15 @@ Practise with autotests
 
 ## prepare venv
 python -m venv .venv   
-source .venv/bin/activate   
+.venv/Scripts/activate   
 pip install -r requirements.txt   
 
 ## requires selenium grid standalone server 
- https://www.selenium.dev/documentation/grid/getting_started/ 
- pointed to localhost:4444
+https://www.selenium.dev/documentation/grid/getting_started/    
+pointed to localhost:4444   
+
+## requires allure   
+https://allurereport.org/docs/install/
 
 ## start tests
 python -m pytest --alluredir reports --clean-alluredir

@@ -1,6 +1,6 @@
 from datetime import datetime
 from selenium.webdriver.common.by import By
-from pages.login_page import LoginPage
+from pages.login_page import LoginPageLocators, LoginPage
 from pages.account_page import AccountPage
 from pages.transactions_page import TransactionsPage
 
@@ -25,7 +25,7 @@ def test_login_as_HP(chrome_browser):
     login_page.select_user_from_list(user_name)
     login_page.click_login_btn()
 
-    assert login_page.verify_successful_login()
+    assert login_page.find_element(LoginPageLocators.logout_btn)
 
 
 def test_deposit(chrome_browser, fibonacci_n):
@@ -88,5 +88,3 @@ def test_transactions(chrome_browser, fibonacci_n):
     tx_page = TransactionsPage(chrome_browser)
 
     assert tx_page.count_rows() == 2
-
-
