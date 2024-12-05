@@ -6,6 +6,9 @@ from pages.account_page import AccountPageLocators, AccountPage
 from pages.transactions_page import TransactionsPageLocators, TransactionsPage
 
 
+@allure.severity(allure.severity_level.CRITICAL)
+@allure.title("Visit XYZ Bank site")
+@allure.label("Customer", "Harry")
 def test_visit_XYZ_Bank(chrome_browser):
     url = "https://www.globalsqa.com/angularJs-protractor/BankingProject/#"
     login_page = LoginPage(chrome_browser)
@@ -14,6 +17,8 @@ def test_visit_XYZ_Bank(chrome_browser):
     assert chrome_browser.title == "XYZ Bank"
 
 
+@allure.title("Login")
+@allure.label("Customer", "Harry")
 def test_login_as_HP(chrome_browser):
     url = "https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login"
     user_name = "Harry Potter"
@@ -29,6 +34,8 @@ def test_login_as_HP(chrome_browser):
     assert login_page.find_element(LoginPageLocators.LOGOUT_BTN)
 
 
+@allure.title("Deposit money on account")
+@allure.label("Customer", "Harry")
 def test_deposit(chrome_browser, fibonacci_n):
     user_name = "Harry Potter"
     amount = fibonacci_n
@@ -50,6 +57,8 @@ def test_deposit(chrome_browser, fibonacci_n):
     )
 
 
+@allure.title("Withdrawl money from account")
+@allure.label("Customer", "Harry")
 def test_withdrawl(chrome_browser, fibonacci_n):
     user_name = "Harry Potter"
     amount = fibonacci_n
@@ -69,6 +78,8 @@ def test_withdrawl(chrome_browser, fibonacci_n):
     )
 
 
+@allure.title("Balance check after deposit + withdrawl same sum")
+@allure.label("Customer", "Harry")
 def test_balance(chrome_browser, fibonacci_n):
     user_name = "Harry Potter"
     amount = fibonacci_n
@@ -82,6 +93,8 @@ def test_balance(chrome_browser, fibonacci_n):
     assert account_page.find_elements(AccountPageLocators.ACCOUNT_INFO)[1].text == "0"
 
 
+@allure.title("Transaction records according to actions, collect table data")
+@allure.label("Customer", "Harry")
 def test_transactions(chrome_browser, fibonacci_n):
     user_name = "Harry Potter"
     amount = fibonacci_n

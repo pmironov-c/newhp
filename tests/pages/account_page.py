@@ -1,3 +1,4 @@
+import allure
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 
@@ -20,38 +21,47 @@ class AccountPageLocators:
 
 
 class AccountPage(BasePage):
+    @allure.step("Click 'Deposit' button")
     def click_deposit_btn(self):
         self.find_element(AccountPageLocators.DEPOSIT_BTN).click()
         self.wait_element(AccountPageLocators.DEPOSIT_SUBMIT_BTN)
 
+    @allure.step("input deposit amount")
     def set_deposit_amount(self, amount):
         self.find_element(AccountPageLocators.DEPOSIT_INPUT).send_keys(amount)
 
+    @allure.step("Submit deposit")
     def click_deposit_submit_btn(self):
         self.find_element(AccountPageLocators.DEPOSIT_SUBMIT_BTN).click()
         self.wait_element(AccountPageLocators.DEPOSIT_MSG)
 
+    @allure.step("Deposit money")
     def deposit(self, amount):
         self.click_deposit_btn()
         self.set_deposit_amount(amount)
         self.click_deposit_submit_btn()
 
+    @allure.step("Click 'Withdrawl' button")
     def click_withdrawl_btn(self):
         self.find_element(AccountPageLocators.WITHDRAWL_BTN).click()
         self.wait_element(AccountPageLocators.WITHDRAWL_SUBMIT_BTN)
 
+    @allure.step("Input withdrawl amount")
     def set_withdrawl_amount(self, amount):
         self.find_element(AccountPageLocators.WITHDRAWL_INPUT).send_keys(amount)
 
+    @allure.step("Submit withdrawl")
     def click_withdrawl_submit_btn(self):
         self.find_element(AccountPageLocators.WITHDRAWL_SUBMIT_BTN).click()
         self.wait_element(AccountPageLocators.WITHDRAWL_MSG)
 
+    @allure.step("Withdrawl money")
     def withdrawl(self, amount):
         self.click_withdrawl_btn()
         self.set_withdrawl_amount(amount)
         self.click_withdrawl_submit_btn()
 
+    @allure.step("Click 'Transaction' button")
     def click_transactions_btn(self):
         self.find_element(AccountPageLocators.TRANSACTIONS_BTN).click()
         self.wait_element(AccountPageLocators.TRANSACTIONS_TBL)
