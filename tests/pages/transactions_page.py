@@ -13,7 +13,7 @@ class TransactionsPageLocators:
 
 
 class TransactionsPage(BasePage):
-    @allure.step("COunt rows in table")
+    @allure.step("Count rows in table")
     def count_tx_table_rows(self):
         return len(self.find_elements(TransactionsPageLocators.TX_TABLE_ROWS))
 
