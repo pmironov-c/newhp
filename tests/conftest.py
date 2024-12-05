@@ -4,9 +4,13 @@ from datetime import datetime
 
 import pytest
 import allure
+from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
+
+
+load_dotenv()
 
 
 @pytest.fixture()

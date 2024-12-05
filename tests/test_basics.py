@@ -1,3 +1,4 @@
+import os
 import allure
 from datetime import datetime
 from selenium.webdriver.common.by import By
@@ -17,11 +18,11 @@ def test_visit_XYZ_Bank(chrome_browser):
     assert chrome_browser.title == "XYZ Bank"
 
 
-@allure.title("Login")
+@allure.title("Login as customer")
 @allure.label("Customer", "Harry")
-def test_login_as_HP(chrome_browser):
+def test_login_as_customer(chrome_browser):
     url = "https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login"
-    user_name = "Harry Potter"
+    user_name = os.environ.get("CUSTOMER_LOGIN")
     login_page = LoginPage(chrome_browser)
 
     login_page.open_page(url)
@@ -37,7 +38,7 @@ def test_login_as_HP(chrome_browser):
 @allure.title("Deposit money on account")
 @allure.label("Customer", "Harry")
 def test_deposit(chrome_browser, fibonacci_n):
-    user_name = "Harry Potter"
+    user_name = os.environ.get("CUSTOMER_LOGIN")
     amount = fibonacci_n
     login_page = LoginPage(chrome_browser)
     login_page.login_as_customer(user_name)
@@ -60,7 +61,7 @@ def test_deposit(chrome_browser, fibonacci_n):
 @allure.title("Withdrawl money from account")
 @allure.label("Customer", "Harry")
 def test_withdrawl(chrome_browser, fibonacci_n):
-    user_name = "Harry Potter"
+    user_name = os.environ.get("CUSTOMER_LOGIN")
     amount = fibonacci_n
     login_page = LoginPage(chrome_browser)
     login_page.login_as_customer(user_name)
@@ -81,7 +82,7 @@ def test_withdrawl(chrome_browser, fibonacci_n):
 @allure.title("Balance check after deposit + withdrawl same sum")
 @allure.label("Customer", "Harry")
 def test_balance(chrome_browser, fibonacci_n):
-    user_name = "Harry Potter"
+    user_name = os.environ.get("CUSTOMER_LOGIN")
     amount = fibonacci_n
     login_page = LoginPage(chrome_browser)
     login_page.login_as_customer(user_name)
@@ -93,10 +94,10 @@ def test_balance(chrome_browser, fibonacci_n):
     assert account_page.find_elements(AccountPageLocators.ACCOUNT_INFO)[1].text == "0"
 
 
-@allure.title("Transaction records according to actions, collect table data")
+@allure.title("Check transactions table, collect data")
 @allure.label("Customer", "Harry")
 def test_transactions(chrome_browser, fibonacci_n):
-    user_name = "Harry Potter"
+    user_name = os.environ.get("CUSTOMER_LOGIN")
     amount = fibonacci_n
     login_page = LoginPage(chrome_browser)
     login_page.login_as_customer(user_name)
@@ -109,7 +110,7 @@ def test_transactions(chrome_browser, fibonacci_n):
     tx_page = TransactionsPage(chrome_browser)
 
     tx_table = []
-    with open("tests/expected.csv", "w", encoding="utf-8") as out_file:
+    with open("reports/expected.csv", "w", encoding="utf-8") as out_file:
         for i in range(1, tx_page.count_tx_table_rows() + 1):
             d, a, t = [e.text for e in tx_page.get_row_n(i)]
             new_d = datetime.strptime(d, "%b %d, %Y %H:%M:%S %p").strftime(
@@ -118,7 +119,7 @@ def test_transactions(chrome_browser, fibonacci_n):
             out_file.write(f"{new_d} {a} {t} \n")
             tx_table.append([d, a, t])
 
-    allure.attach.file("tests/expected.csv", "Transactions data")
+    allure.attach.file("reports/expected.csv", "Transactions data")
 
     e = []
     if len(tx_table) != 2:
