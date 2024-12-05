@@ -10,7 +10,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 @pytest.fixture()
-@allure.title("Prepare chrome browser")
+@allure.title("Chrome browser")
 def chrome_browser():
     options = webdriver.ChromeOptions()
     options.timeouts = {"pageLoad": 5 * 10e3, "script": 5 * 10e3, "implicit": 5 * 10e3}
