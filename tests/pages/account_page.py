@@ -65,3 +65,12 @@ class AccountPage(BasePage):
     def click_transactions_btn(self):
         self.find_element(AccountPageLocators.TRANSACTIONS_BTN).click()
         self.wait_element(AccountPageLocators.TRANSACTIONS_TBL)
+
+    def get_current_balance(self):
+        return self.find_elements(AccountPageLocators.ACCOUNT_INFO)[1].text
+
+    def get_deposit_msg_text(self):
+        return self.find_element(AccountPageLocators.DEPOSIT_MSG).text
+
+    def get_withdrawl_msg_text(self):
+        return self.find_element(AccountPageLocators.WITHDRAWL_MSG).text

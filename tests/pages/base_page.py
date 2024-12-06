@@ -36,3 +36,6 @@ class BasePage:
             EC.presence_of_element_located(locator),
             message=f"Can't find element by locator {locator}",
         )
+
+    def get_title(self):
+        return self.driver.title
