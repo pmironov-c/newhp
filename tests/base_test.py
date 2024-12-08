@@ -1,5 +1,6 @@
+import os
 import pytest
 
 
 class BaseTest:
-    pass
+    user_name = os.environ.get("CUSTOMER_LOGIN")
